@@ -1,11 +1,9 @@
 import "dotenv/config";
-import AxiosAdapter from "./infra/AxiosAdapter";
+import ExpressAdapter from "./infra/ExpressAdapter";
 
 async function Main() {
-  const httpServer = new AxiosAdapter();
+  const httpServer = new ExpressAdapter();
   const port = process.env.LOCALPORT ?? 4000;
-  httpServer.listen(port).then(() => {
-    console.log(`Server is running on port ${port}`);
-  });
+  httpServer.listen(port);
 }
 Main();
