@@ -1,0 +1,32 @@
+version: "3.2"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=dev
+      - RABBITMQ_DEFAULT_PASS=senhadev
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/
+    networks:
+      - rabbitmq-network
+      - postgres-network
+
+  postgres:
+    image: postgres:14.2-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=senhadev
+    ports:
+      - "5432:5432"
+networks:
+  rabbitmq-network:
+    driver: bridge
+  postgres-network:
+    driver: bridge

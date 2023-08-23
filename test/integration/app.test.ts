@@ -1,5 +1,6 @@
 import "dotenv/config";
-import AxiosAdapter from "../src/infra/AxiosAdapter";
+import AxiosAdapter from "../../src/infra/AxiosAdapter";
+
 describe("/api.test/", () => {
   const axiosAdapter = new AxiosAdapter();
   test("Should local api return heath and status 200 ", async () => {
@@ -11,4 +12,6 @@ describe("/api.test/", () => {
     const output = await axiosAdapter.get(`${process.env.API_URL}`);
     expect(output.data.length).toBeGreaterThan(71);
   });
+
+  test("Should save data in a sql database", async () => {});
 });
