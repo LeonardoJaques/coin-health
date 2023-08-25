@@ -17,7 +17,7 @@ describe("/api.test/", () => {
     expect(output.data.length).toBeGreaterThan(50);
     const output2 = await axiosAdapter.post(
       `http://localhost:3000${EnumRoutes.NUC}`,
-      output.data[0]
+      output.data
     );
     console.log(output2.data, output2.status);
   });
