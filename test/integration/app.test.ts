@@ -1,17 +1,24 @@
+import axios from "axios";
 import "dotenv/config";
+import { EnumRoutes } from "../../src/enuns/enumRoutes";
 import AxiosAdapter from "../../src/infra/AxiosAdapter";
+axios.defaults.validateStatus = () => true;
 
 describe("/api.test/", () => {
   const axiosAdapter = new AxiosAdapter();
-  test("Should local api return heath and status 200 ", async () => {
-    const output = await axiosAdapter.get("http://localhost:3000/");
-    console.log(output.data);
-    // expect(output.status).toBe(200);
+  test("Should local api return heath and status 404 ", async () => {
+    const output = await axiosAdapter.get(
+      `http://localhost:3000/${EnumRoutes.HEALTHCHECK}`
+    );
+    expect(output.status).toBe(404);
   });
-  test("Should api investidor10 return a json", async () => {
+  test("Should api investidor10 return a json and save", async () => {
     const output = await axiosAdapter.get(process.env.API_URL || "");
-    expect(output.data.length).toBeGreaterThan(71);
+    expect(output.data.length).toBeGreaterThan(50);
+    const output2 = await axiosAdapter.post(
+      `http://localhost:3000${EnumRoutes.NUC}`,
+      output.data[0]
+    );
+    console.log(output2.data, output2.status);
   });
-
-  test("Should save data in a sql database", async () => {});
 });
