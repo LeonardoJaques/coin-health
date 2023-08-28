@@ -7,9 +7,8 @@ export default class ProcessCandle {
     readonly candleGateway: CandleGateway,
     readonly nubankRepository: NucRepository
   ) {}
-  async execute(input: Candle): Promise<Candle> {
-    const outputCandle = await this.candleGateway.createRegistry(input);
-    await this.nubankRepository.save(outputCandle);
-    return outputCandle;
+  async execute(input: Candle[]): Promise<any> {
+    const outputCandle = await this.candleGateway.createRegistry([...input]);
+    return await this.nubankRepository.save(outputCandle);
   }
 }

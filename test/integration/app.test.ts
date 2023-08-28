@@ -15,9 +15,11 @@ describe("/api.test/", () => {
   test("Should api investidor10 return a json and save", async () => {
     const output = await axiosAdapter.get(process.env.API_URL || "");
     expect(output.data.length).toBeGreaterThan(50);
+
+    const input = output.data;
     const output2 = await axiosAdapter.post(
       `http://localhost:3000${EnumRoutes.NUC}`,
-      output.data
+      input
     );
     console.log(output2.data, output2.status);
   });

@@ -17,7 +17,6 @@ export default class MainController {
     );
     httpServer.on("post", EnumRoutes.NUC, async (params: any, body: any) => {
       const output = await this.processCandle?.execute(body);
-      console.log("MainController", output);
       return output;
     });
   }
