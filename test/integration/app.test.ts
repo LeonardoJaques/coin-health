@@ -13,14 +13,15 @@ describe("/api.test/", () => {
     expect(output.status).toBe(404);
   });
   test("Should api investidor10 return a json and save", async () => {
-    const output = await axiosAdapter.get(process.env.API_URL || "");
-    expect(output.data.length).toBeGreaterThan(50);
+    const output1 = await axiosAdapter.get(process.env.API_URL || "");
+    expect(output1.data.length).toBeGreaterThan(50);
 
-    const input = output.data;
+    const input = [output1.data[0]];
     const output2 = await axiosAdapter.post(
       `http://localhost:3000${EnumRoutes.NUC}`,
       input
     );
-    console.log(output2.data, output2.status);
+
+    expect(output2.status).toBe(200);
   });
 });
