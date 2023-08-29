@@ -12,16 +12,29 @@ describe("/api.test/", () => {
     );
     expect(output.status).toBe(404);
   });
-  test("Should api investidor10 return a json and save", async () => {
-    const output1 = await axiosAdapter.get(process.env.API_URL || "");
-    expect(output1.data.length).toBeGreaterThan(50);
-
-    const input = [output1.data[0]];
-    const output2 = await axiosAdapter.post(
+  test("Should api investidor10 return a json", async () => {
+    const output = await axiosAdapter.get(process.env.API_URL || "");
+    expect(output.data.length).toBeGreaterThan(50);
+  });
+  test("Should api investidor10 save in database", async () => {
+    const input = [
+      {
+        dolar_price: "1.150007",
+        brl_price: "0.780000",
+        created_at: "13/09/2022",
+      },
+      {
+        dolar_price: "0.150007",
+        brl_price: "0.780000",
+        created_at: "13/09/2022",
+      },
+    ];
+    const output = await axiosAdapter.post(
       `http://localhost:3000${EnumRoutes.NUC}`,
       input
     );
-
-    expect(output2.status).toBe(200);
+    expect(output.status).toBe(200);
+    expect(output.data.nucId[0].length).toBeGreaterThan(35);
+    expect(output.data.nucId.length).toBeGreaterThan(1);
   });
 });
