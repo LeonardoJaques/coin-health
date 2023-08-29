@@ -16,7 +16,7 @@ describe("/api.test/", () => {
     const output = await axiosAdapter.get(process.env.API_URL || "");
     expect(output.data.length).toBeGreaterThan(50);
   });
-  test("Should api investidor10 save in database", async () => {
+  test("Should api investidor10 save in database and return nuc_id", async () => {
     const input = [
       {
         dolar_price: "1.150007",
