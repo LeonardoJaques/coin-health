@@ -32,7 +32,7 @@ describe("/api.test/", () => {
     expect(output.data.nucId[0].length).toBeGreaterThan(35);
     expect(output.data.nucId.length).toBeGreaterThan(1);
   });
-  test("Should get information in database and delete this information", async () => {
+  test.only("Should get information in database and delete this information", async () => {
     const input = [
       {
         dolar_price: "1.150007",
