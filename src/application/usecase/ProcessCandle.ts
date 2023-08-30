@@ -14,7 +14,7 @@ export default class ProcessCandle {
       const registered = await this.candleGateway.createRegistry([
         input[candle],
       ]);
-      await this.nubankRepository.save(registered);
+      await this.nubankRepository.saveNuc(registered);
       nucId.push(registered.nucId);
     }
     return { nucId };

@@ -32,7 +32,7 @@ describe("/api.test/", () => {
     expect(output.data.nucId[0].length).toBeGreaterThan(35);
     expect(output.data.nucId.length).toBeGreaterThan(1);
   });
-  test.only("Should get information in database", async () => {
+  test("Should get information in database and delete this information", async () => {
     const input = [
       {
         dolar_price: "1.150007",
@@ -41,14 +41,19 @@ describe("/api.test/", () => {
       },
     ];
     const output = await axiosAdapter.post(
-      `http://localhost:3000${EnumRoutes.SAVE}`,
+      `http://localhost:${process.env.LOCALPORT}${EnumRoutes.SAVE}`,
       input
     );
     const nucId = output.data.nucId[0];
     const result = await axiosAdapter.get(
-      `http://localhost:3000${EnumRoutes.GET}/${nucId}`
+      `http://localhost:${process.env.LOCALPORT}${EnumRoutes.GET}/${nucId}`
     );
     expect(result.status).toBe(200);
     expect(result.data.nuc_id).toBe(nucId);
+    const deleted = await axiosAdapter.get(
+      `http://localhost:${process.env.LOCALPORT}${EnumRoutes.DELETE}/${nucId}`
+    );
+    expect(deleted.status).toBe(200);
+    expect(deleted.data.message).toBe("deleted");
   });
 });

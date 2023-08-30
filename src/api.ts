@@ -1,6 +1,7 @@
 import "dotenv/config";
 import GetCandles from "./application/usecase/GetCandle";
 import ProcessCandle from "./application/usecase/ProcessCandle";
+import RemoveCandle from "./application/usecase/RemoveCandle";
 import ExpressAdapter from "./infra/ExpressAdapter";
 import PgPromiseAdapter from "./infra/database/PgPromiseAdapter";
 import Registry from "./infra/di/Registry";
@@ -16,8 +17,10 @@ async function Main() {
   const candleGateway = new CandleGatewayInfra();
   const processCandle = new ProcessCandle(candleGateway, nucRepository);
   const getCandle = new GetCandles(nucRepository);
+  const removeCandle = new RemoveCandle(nucRepository);
   registry.provide("processCandle", processCandle);
   registry.provide("getCandle", getCandle);
+  registry.provide("removeCandle", removeCandle);
   new MainController(httpServer);
   const port = process.env.LOCALPORT ?? 4000;
   httpServer.listen(port);
