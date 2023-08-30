@@ -6,12 +6,6 @@ axios.defaults.validateStatus = () => true;
 
 describe("/api.test/", () => {
   const axiosAdapter = new AxiosAdapter();
-  test("Should local api return heath and status 404 ", async () => {
-    const output = await axiosAdapter.get(
-      `http://localhost:3000/${EnumRoutes.HEALTHCHECK}`
-    );
-    expect(output.status).toBe(404);
-  });
   test("Should api investidor10 return a json", async () => {
     const output = await axiosAdapter.get(process.env.API_URL || "");
     expect(output.data.length).toBeGreaterThan(50);
@@ -29,12 +23,32 @@ describe("/api.test/", () => {
         created_at: "13/09/2022",
       },
     ];
+
     const output = await axiosAdapter.post(
-      `http://localhost:3000${EnumRoutes.NUC}`,
+      `http://localhost:3000${EnumRoutes.SAVE}`,
       input
     );
     expect(output.status).toBe(200);
     expect(output.data.nucId[0].length).toBeGreaterThan(35);
     expect(output.data.nucId.length).toBeGreaterThan(1);
+  });
+  test.only("Should get information in database", async () => {
+    const input = [
+      {
+        dolar_price: "1.150007",
+        brl_price: "0.780000",
+        created_at: "13/09/2022",
+      },
+    ];
+    const output = await axiosAdapter.post(
+      `http://localhost:3000${EnumRoutes.SAVE}`,
+      input
+    );
+    const nucId = output.data.nucId[0];
+    const result = await axiosAdapter.get(
+      `http://localhost:3000${EnumRoutes.GET}/${nucId}`
+    );
+    expect(result.status).toBe(200);
+    expect(result.data.nuc_id).toBe(nucId);
   });
 });

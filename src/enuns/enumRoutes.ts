@@ -1,4 +1,4 @@
 export enum EnumRoutes {
-  NUC = "/api/nuc",
-  HEALTHCHECK = "/healthcheck",
+  SAVE = "/api/save",
+  GET = "/api/get",
 }

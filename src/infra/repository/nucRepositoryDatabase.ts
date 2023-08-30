@@ -11,5 +11,11 @@ export default class NucRepositoryDatabase implements NucRepository {
     );
     return { nucId: "test" };
   }
-  async getNuc(nucId: String): Promise<any> {}
+  async getNuc(nucId: String): Promise<any> {
+    const [nucData] = await this.connection.query(
+      "select * from health_coin.nubank where nuc_id = $1",
+      [nucId]
+    );
+    return nucData;
+  }
 }
