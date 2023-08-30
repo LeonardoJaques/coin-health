@@ -23,7 +23,7 @@ export default class MainController {
       }
     );
     httpServer.on(
-      "delete",
+      "get",
       `${EnumRoutes.DELETE}/:nucid`,
       async (params: any, body: any) => {
         if (!this.removeCandle) return;
